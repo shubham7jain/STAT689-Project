@@ -7,10 +7,10 @@ from sklearn.model_selection import KFold
 import numpy as np
 
 # Training Dataset created with some contamination level
-X_orig, Y_orig = generate_mislabeled_data(100000, 0.4)
+X_orig, Y_orig = generate_mislabeled_data(1000, 0.0)
 
 # Test Dataset created with no contamination level
-X_test, Y_test = generate_mislabeled_data(10000, 0.0)
+X_orig_test, Y_orig_test = generate_mislabeled_data(100, 0.0)
 
 kf = KFold(n_splits=10)
 
@@ -32,19 +32,19 @@ for train_index, test_index in kf.split(X_orig):
 
 print('Original dataset size : ', X_orig.shape[0])
 
-# X_train,X_test,Y_train,Y_test = train_test_split(X,Y,test_size=0.33)
 clf = LogisticRegression()
 clf.fit(X_orig, Y_orig)
-print('Score without removing Mislabeled Data: ', clf.score(X_test, Y_test))
+print(clf.coef_)
+print('Score without removing Mislabeled Data: ', clf.score(X_orig_test, Y_orig_test))
 
 # Removing all the entries which are counted as mislabed by both classifiers
 indexes = np.where(mismatches > 1)[0]
-X_orig = np.delete(X_orig, indexes, 0)
-Y_orig = np.delete(Y_orig, indexes)
+X_new = np.delete(X_orig, indexes, 0)
+Y_new = np.delete(Y_orig, indexes)
 
-print('Dataset size after removing Mislabeled Data : ', X_orig.shape[0])
+print('Dataset size after removing Mislabeled Data : ', X_new.shape[0])
 
-X_train,X_test,Y_train,Y_test = train_test_split(X_orig,Y_orig,test_size=0.33)
 clf = LogisticRegression()
-clf.fit(X_train, Y_train)
-print('Score after removing Mislabeled Data: ', clf.score(X_test, Y_test))
+clf.fit(X_new, Y_new)
+print(clf.coef_)
+print('Score after removing Mislabeled Data: ', clf.score(X_orig_test, Y_orig_test))
