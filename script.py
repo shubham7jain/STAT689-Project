@@ -12,23 +12,23 @@ classifiers_for_filtering_for_SF = [
 ]
 
 noise_levels = [0.0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30]
-scores1 = [0.0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30]
-scores2 = [0.0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30]
-scores3 = [0.0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30]
-scores4 = [0.0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30]
+scores1 = []
+scores2 = []
+scores3 = []
+scores4 = []
 
-# for i in range(len(noise_levels)):
-#     scores1.append(runner(classifiers_for_filtering_for_SF, noise_levels[i], False))
-#     scores2.append(runner(classifiers_for_filtering_for_SF, noise_levels[i], True, 'SF'))
-#     scores3.append(runner(classifiers_for_filtering_MF_and_CF, noise_levels[i], True, 'MF'))
-#     scores4.append(runner(classifiers_for_filtering_MF_and_CF, noise_levels[i], True, 'CF'))
-#
-# for i in range(len(noise_levels)):
-#     print('Noise Level : ', noise_levels[i])
-#     print('None : ', scores1[i])
-#     print('SF : ', scores2[i])
-#     print('MF : ', scores3[i])
-#     print('CF : ', scores4[i])
+for i in range(len(noise_levels)):
+    scores1.append(runner(classifiers_for_filtering_for_SF, noise_levels[i], False))
+    scores2.append(runner(classifiers_for_filtering_for_SF, noise_levels[i], True, 'SF'))
+    scores3.append(runner(classifiers_for_filtering_MF_and_CF, noise_levels[i], True, 'MF'))
+    scores4.append(runner(classifiers_for_filtering_MF_and_CF, noise_levels[i], True, 'CF'))
+
+for i in range(len(noise_levels)):
+    print('Noise Level : ', noise_levels[i])
+    print('None : ', scores1[i])
+    print('SF : ', scores2[i])
+    print('MF : ', scores3[i])
+    print('CF : ', scores4[i])
 
 plt.plot(noise_levels, scores1, 'r--', label='None')
 plt.plot(noise_levels, scores2, 'b--', label='SF')
