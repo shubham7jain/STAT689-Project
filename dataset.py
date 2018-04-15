@@ -3,6 +3,8 @@ import pandas as pd
 from sklearn.cross_validation import train_test_split
 import random
 from struct import unpack
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
 
 ## computes the p_i for any x_i and beta
 def logistic(x,beta):
@@ -75,7 +77,17 @@ def read_mnist_data(alpha):
     test_lbl = test_lbl[:1000]
 
     for i in range(len(train_lbl)):
-        if (random.randint(1, 11) <= alpha*10):
+        if (random.uniform(0, 10) <= alpha*10):
             train_lbl[i] = random.randint(1, 10)
 
     return train_img, test_img, train_lbl, test_lbl
+
+def read_iris_data(alpha):
+    iris = load_iris()
+    X_train, X_test, y_train, y_test = train_test_split(iris.data, iris.target, test_size=0.4, random_state=0)
+
+    for i in range(len(y_train)):
+        if (random.uniform(0, 3) <= alpha*3):
+            y_train[i] = random.randint(0, 2)
+
+    return X_train, X_test, y_train, y_test
