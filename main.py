@@ -1,5 +1,5 @@
 from util import identifyMisLabeled
-from dataset import generate_mislabeled_data, read_mnist_data
+from dataset import generate_mislabeled_data, read_mnist_data, read_iris_data
 from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import KFold
 import numpy as np
@@ -13,7 +13,8 @@ def runner(classifiers_for_filtering, noise_level, filtering, filtering_type=Non
 
     print('Running for noise level = ', noise_level, ' and filtering = ', filtering, ' and filtering type = ', filtering_type)
     learning_algorithm = LogisticRegression(solver = 'lbfgs')
-    X_orig, X_orig_test, Y_orig, Y_orig_test = read_mnist_data(noise_level)
+    corrupted = []
+    X_orig, X_orig_test, Y_orig, Y_orig_test = read_mnist_data(noise_level, corrupted)
 
     if(filtering == False):
         clf = LogisticRegression(solver='lbfgs')
@@ -22,7 +23,7 @@ def runner(classifiers_for_filtering, noise_level, filtering, filtering_type=Non
         print('Score without removing Mislabeled Data: ', score)
         return score
 
-    kf = KFold(n_splits=5)
+    kf = KFold(n_splits=10)
 
     # Array of mismatches is created to store the number of times
     # element at that index is identified as mislabeled by different models.
@@ -47,6 +48,9 @@ def runner(classifiers_for_filtering, noise_level, filtering, filtering_type=Non
 
     # Removing all the entries which are counted as mislabed by both classifiers
     indexes = np.where(mismatches >= minMisMatches)[0]
+
+    discarded = indexes
+    intersection = np.intersect1d(discarded, corrupted)
     X_new = np.delete(X_orig, indexes, 0)
     Y_new = np.delete(Y_orig, indexes)
 
@@ -57,4 +61,10 @@ def runner(classifiers_for_filtering, noise_level, filtering, filtering_type=Non
     score = clf.score(X_orig_test, Y_orig_test)
     print('Score after removing Mislabeled Data: ', score)
 
-    return score
+    pE1 = (len(discarded) - len(intersection))/(len(X_train) - len(corrupted))
+    pE2 = 0
+    if len(corrupted) != 0:
+        pE2 = (len(corrupted) - len(intersection))/(len(corrupted))
+
+    print('P(E1) = ', pE1, ', P(E2) = ',  pE2)
+    return score, pE1, pE2

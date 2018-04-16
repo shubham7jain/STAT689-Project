@@ -65,7 +65,7 @@ def loadmnist(imagefile, labelfile):
     labels.close()
     return (x, y)
 
-def read_mnist_data(alpha):
+def read_mnist_data(alpha, corrupted):
     train_img, train_lbl = loadmnist('mnist-data/train-images-idx3-ubyte'
                                      , 'mnist-data/train-labels-idx1-ubyte')
     test_img, test_lbl = loadmnist('mnist-data/t10k-images-idx3-ubyte'
@@ -79,6 +79,7 @@ def read_mnist_data(alpha):
     for i in range(len(train_lbl)):
         if (random.uniform(0, 10) <= alpha*10):
             train_lbl[i] = random.randint(1, 10)
+            corrupted.append(i)
 
     return train_img, test_img, train_lbl, test_lbl
 
