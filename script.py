@@ -41,10 +41,10 @@ for i in range(len(noise_levels)):
 
 for i in range(len(noise_levels)):
     print('Noise Level : ', noise_levels[i])
-    print('None : ', scores1[i])
-    print('SF : ', scores2[i], ' P(E1) = ', pE1_SF[i], ' P(E2) = ', pE2_SF[i])
-    print('MF : ', scores3[i], ' P(E1) = ', pE1_MF[i], ' P(E2) = ', pE2_MF[i])
-    print('CF : ', scores4[i], ' P(E1) = ', pE1_CF[i], ' P(E2) = ', pE2_CF[i])
+    print('Filter: None : Accuracy = ', scores1[i])
+    print('Filter: SF : Accuracy = ', scores2[i], ', P(E1) = ', pE1_SF[i], ', P(E2) = ', pE2_SF[i])
+    print('Filter: MF : Accuracy = ', scores3[i], ', P(E1) = ', pE1_MF[i], ', P(E2) = ', pE2_MF[i])
+    print('Filter: CF : Accuracy = ', scores4[i], ', P(E1) = ', pE1_CF[i], ', P(E2) = ', pE2_CF[i])
 
 plt.plot(noise_levels, scores1, 'r--', label='None')
 plt.plot(noise_levels, scores2, 'b--', label='SF')
