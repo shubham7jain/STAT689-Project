@@ -14,3 +14,6 @@ Report is present in Report.ipynb file
     *  Dataset for this is present in mnist-data/ folder
 
 2. Rankprunning Approach
+    * Rankpruning implementation - rankpruning.py
+    * Comparison and analysis - rp_comparison.py
+    * Generic classifier class for use with RP - classifier_for_rp.py

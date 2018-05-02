@@ -1,6 +1,6 @@
 from __future__ import print_function
 from rankpruning import RankPruning
-from baseline import BaselineNoisyPN
+from classifier_for_rp import BaselineNoisyPN
 
 import numpy as np
 
