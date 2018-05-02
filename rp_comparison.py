@@ -1,4 +1,3 @@
-from __future__ import print_function
 from rankpruning import RankPruning
 from classifier_for_rp import BaselineNoisyPN
 
