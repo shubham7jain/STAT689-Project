@@ -1,4 +1,4 @@
-## Most implementation details taken from https://github.com/cgnorthcutt/rankpruning
+## Implementation taken from https://github.com/cgnorthcutt/rankpruning and modified. The package had some minor errors.
 
 from __future__ import print_function
 
